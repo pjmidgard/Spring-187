@@ -93,7 +93,7 @@ if option == "1":
     # Compression and Save
     input_file_name = input("Enter the name of the input file for compression: ")
     output_file_name = input_file_name + ".bin"
-    repeat_bit_replacements = int(input("How many times to repeat bit replacements during compression: "))
+    repeat_bit_replacements = 100
 
     try:
         with open(input_file_name, 'rb') as input_file:
@@ -134,7 +134,7 @@ elif option == "2":
     else:
         output_file_name = input_file_name[:input_file_name_long - 4]
     
-    repeat_bit_replacements = int(input("How many times to repeat bit replacements during extraction: "))
+    repeat_bit_replacements = 100
 
     try:
         with open(input_file_name, 'rb') as input_file:

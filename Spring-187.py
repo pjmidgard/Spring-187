@@ -1,7 +1,8 @@
 # Author Jurijus Pacalovas
-#Created Jurijus Pacalovas
+# Created Jurijus Pacalovas
+
 # Function to reverse specific bit patterns during compression and extraction
-def reverse_bits(data):
+def reverse_bits(data, step):
     # Bit pattern replacements
     replacements = {
         b'000000000': b'111001101',
@@ -26,9 +27,10 @@ def reverse_bits(data):
     for pattern, replacement in replacements.items():
         data = data.replace(pattern, replacement)
 
-    # Additional bit replacements for values greater and less than (2**23)//2
-    data = data.replace(b'1', b'')  # Delete '1' bits for values greater than (2**23)//2
-    data = data.replace(b'0', b'1')  # Replace '0' with '1' for values less than (2**23)//2
+    # Additional bit replacements for values greater and less than specified thresholds
+    threshold = 2 ** (23 + step)
+    data = data.replace(b'1', b'') if step % 2 == 1 else data
+    data = data.replace(b'0', b'1') if step % 2 == 0 else data
 
     return data
 
@@ -75,9 +77,9 @@ def binary_to_triples(binary_data):
     return triples
 
 # Function to apply bit replacements multiple times
-def apply_bit_replacements(data, repeat):
+def apply_bit_replacements(data, repeat, step):
     for _ in range(repeat):
-        data = reverse_bits(data)
+        data = reverse_bits(data, step)
     return data
 
 # Initialize the 'triples' variable to an empty list
@@ -99,8 +101,8 @@ if option == "1":
         with open(input_file_name, 'rb') as input_file:
             input_data = input_file.read()
 
-        # Reverse the first 512 bits
-        input_data = apply_bit_replacements(input_data[:512], repeat_bit_replacements) + input_data[512:]
+        for step in range(1, 100):  # Iterate through four steps
+            input_data = apply_bit_replacements(input_data[:512], repeat_bit_replacements, step)
 
         # Set the limit for finding Pythagorean triples to 7
         limit = 7  # Adjust the limit as needed
@@ -114,12 +116,12 @@ if option == "1":
         # Step 3: Append binary data to the original input data
         input_data += binary_data
 
-        # Step 4: Compress the combined data using Paq
-        paq_compressed_data = input_data
+        # Step 4: Compress the combined data (actual compression method not shown)
+        # You should implement your own compression method here.
 
-        # Save the Paq compressed data to the specified file in binary mode ('wb')
+        # Save the compressed data to the specified file in binary mode ('wb')
         with open(output_file_name, 'wb') as compressed_file:
-            compressed_file.write(paq_compressed_data)
+            compressed_file.write(input_data)
 
         print(f"Data successfully compressed and saved to '{output_file_name}'.")
     except FileNotFoundError:
@@ -138,19 +140,16 @@ elif option == "2":
 
     try:
         with open(input_file_name, 'rb') as input_file:
-            paq_compressed_data = input_file.read()
+            compressed_data = input_file.read()
 
-        # Step 1: Decompress the Paq compressed data
-        decompressed_data =paq_compressed_data
-
-        # Reverse the first 512 bits
-        decompressed_data = apply_bit_replacements(decompressed_data[:512], repeat_bit_replacements) + decompressed_data[512:]
+        for step in range(1, 100):  # Iterate through four steps
+            compressed_data = apply_bit_replacements(compressed_data[:512], repeat_bit_replacements, step)
 
         # Set the limit for finding Pythagorean triples to 7
         limit = 7  # Adjust the limit as needed
 
         # Step 3: Find binary data that represents Pythagorean triples
-        binary_data = decompressed_data[-(len(triples) * 3):]  # Assuming each triple is 3 bytes
+        binary_data = compressed_data[-(len(triples) * 3):]  # Assuming each triple is 3 bytes
 
         # Step 4: Convert binary data back to Pythagorean triples
         extracted_triples = binary_to_triples(binary_data)

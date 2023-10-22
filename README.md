@@ -2,32 +2,26 @@
 Spring-187
 Random Compression Created by Jurijus Pacalovas 
 
-1. The code begins with a few predefined functions, including:
-   - `reverse_bits(data)`: A function to reverse specific bit patterns in binary data.
-   - `perform_custom_bit_replacements(data, bit_length, num_steps, condition)`: A function to perform custom bit replacements based on the specified steps and a condition function.
+1. Import the `random` module to generate random data and other necessary modules.
 
-2. The `read_write_binary_data` function takes care of reading and writing binary data. It has parameters for input and output filenames, the operation ("compression" or "extraction"), and a condition function.
+2. Define a function `generate_random_data(num_bits)` to create random data of a specified length in bits.
 
-3. The main part of the code is user-driven, offering two options:
-   - Option 1: Compression and Save
-   - Option 2: Extraction and Save
+3. Generate 99 sets of random bit patterns (Huffman trees) ranging from 8 to 106 bits in length.
 
-4. For compression, the code:
-   - Prompts the user to provide the name of the input file for compression and the output file for saving compressed data.
-   - Defines a threshold and a condition based on bit length (23 bits in this example).
-   - Reads the input file, reverses the first 512 bits, and performs custom bit replacements based on the condition.
-   - Writes the modified data to the output file and informs the user of successful compression.
+4. Define a function `compress_data(data, bit_patterns)` to compress input data using the generated Huffman trees. It iterates through the data and looks for the longest matching bit patterns to compress the data.
 
-5. For extraction, the code:
-   - Prompts the user to provide the name of the input compressed file and the output file for saving the extracted data.
-   - Defines a threshold and a condition similar to the compression part.
-   - Reads the input file, reverses the first 512 bits, and performs custom bit replacements based on the condition.
-   - Writes the modified data to the output file and informs the user of successful extraction.
+5. Define a function `extract_data(compressed_data, bit_patterns)` to extract compressed data using the Huffman trees. It reverses the compression process by finding and removing the Huffman tree patterns.
 
-6. The code also handles some error checking for file operations, such as checking if the files exist.
+6. Define functions to save data to a binary file and read data from a binary file, making it possible to save and retrieve data.
 
-7. The threshold condition for bit replacement can be easily customized within the code. The code also provides support for bit lengths ranging from 23 to 100 bits, allowing for versatile use in different scenarios.
+7. In the main program, the user is presented with options to perform compression, extraction, or exit.
 
-This code is useful for those who need to apply specific bit replacements based on conditions for compression and extraction of binary data. It can be adapted and extended for various applications, especially when working with binary data files.
+8. If the user selects compression, they are prompted to enter the names of the input and output files. The program reads the data from the input file, compresses it using the Huffman trees, and saves the compressed data to the output file.
 
+9. If the user selects extraction, they are also prompted to enter input and output file names. The program reads the compressed data from the input file, extracts it using the Huffman trees, and saves the extracted data to the output file.
 
+10. The program allows users to continue selecting options until they choose to exit.
+
+11. If the user selects the exit option or if there's an invalid input, the program terminates.
+
+Keep in mind that this code is a simplified example and does not include some essential features like error handling, actual Huffman tree generation, or meaningful data compression. It's more of a demonstration of the structure and basic functionality needed for a Huffman coding-based compression and extraction program.

@@ -1,27 +1,34 @@
 # Spring-187
 Spring-187
-Random Compression Created by Jurijus Pacalovas 
+Random Compression Created by Jurijus Pacalovas
 
-1. Import the `random` module to generate random data and other necessary modules.
+1. **Random Data Generation**:
+   - The code begins by importing the `random` module and defines a function `generate_random_data(num_bits)` to generate random binary data of a specified length in bits.
 
-2. Define a function `generate_random_data(num_bits)` to create random data of a specified length in bits.
+2. **Bit Patterns (Huffman Trees)**:
+   - It generates 99 sets of bit patterns, ranging from 8 to 106 bits in length, and stores them in the `bit_patterns` list.
 
-3. Generate 99 sets of random bit patterns (Huffman trees) ranging from 8 to 106 bits in length.
+3. **Compression and Extraction Functions**:
+   - Two primary functions, `compress_data` and `extract_data`, are defined to compress and extract data using the 99 Huffman trees. These functions identify and match the bit patterns to perform their respective operations.
 
-4. Define a function `compress_data(data, bit_patterns)` to compress input data using the generated Huffman trees. It iterates through the data and looks for the longest matching bit patterns to compress the data.
+4. **Data Translation**:
+   - Another function, `translate_to_0_255(data)`, converts binary data to the 0-255 range, presumably for easier storage or transmission.
 
-5. Define a function `extract_data(compressed_data, bit_patterns)` to extract compressed data using the Huffman trees. It reverses the compression process by finding and removing the Huffman tree patterns.
+5. **File I/O Functions**:
+   - The code includes two functions, `save_to_binary_file` and `read_from_binary_file`, for saving data to binary files and reading data from binary files, respectively. It handles exceptions for file not found scenarios.
 
-6. Define functions to save data to a binary file and read data from a binary file, making it possible to save and retrieve data.
+6. **Main Program**:
+   - The main program runs in a loop, providing options to the user:
+     - Option 1: Compression
+     - Option 2: Extraction
+     - Option 3: Exit
 
-7. In the main program, the user is presented with options to perform compression, extraction, or exit.
+7. **Option Processing**:
+   - Depending on the user's choice, the program proceeds as follows:
+     - **Compression (Option 1)**: It takes an input file, compresses the data using Huffman trees, translates the data, and saves it to an output file in the 0-255 range.
+     - **Extraction (Option 2)**: It reads compressed data from an input file, extracts it using Huffman trees, translates the data, and saves it to an output file in the 0-255 range.
 
-8. If the user selects compression, they are prompted to enter the names of the input and output files. The program reads the data from the input file, compresses it using the Huffman trees, and saves the compressed data to the output file.
+8. **Exit**:
+   - The program terminates when the user selects Option 3.
 
-9. If the user selects extraction, they are also prompted to enter input and output file names. The program reads the compressed data from the input file, extracts it using the Huffman trees, and saves the extracted data to the output file.
-
-10. The program allows users to continue selecting options until they choose to exit.
-
-11. If the user selects the exit option or if there's an invalid input, the program terminates.
-
-Keep in mind that this code is a simplified example and does not include some essential features like error handling, actual Huffman tree generation, or meaningful data compression. It's more of a demonstration of the structure and basic functionality needed for a Huffman coding-based compression and extraction program.
+This code seems to be a simplified example of data compression and extraction, but it has some limitations and potential improvements. For instance, the use of random Huffman trees may not be efficient or effective for real-world data compression.

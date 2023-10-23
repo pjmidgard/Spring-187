@@ -41,4 +41,3 @@ Random Compression Created by Jurijus Pacalovas
      - The extracted data is translated back to the 0-255 range.
      - The result is saved to an output file.
 
-   - The program ends with a "Program terminated" message.

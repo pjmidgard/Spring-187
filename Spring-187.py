@@ -49,6 +49,12 @@ def save_to_binary_file(file_name, data):
     with open(file_name, 'wb') as file:
         file.write(data)
 
+# Function to save Huffman trees to a binary file
+def save_huffman_trees_to_file(file_name, huffman_trees):
+    with open(file_name, 'wb') as file:
+        for tree in huffman_trees:
+            file.write(tree)
+
 # Main program
 while True:
     option = input("Options:\n1. Compression\n2. Extraction\n3. Exit\nSelect an option (1, 2, or 3): ")
@@ -66,19 +72,22 @@ if option == "1":
         # Apply variations (e.g., multiply by a factor)
         variation_factor = 2  # Adjust this factor as needed
         varied_data = apply_variations(original_data, variation_factor)
-        
+
         # Generate random Huffman trees
         huffman_trees = generate_random_huffman_trees(99, 8, 106)
-        
+
+        # Save the Huffman trees to a file
+        save_huffman_trees_to_file("huffman_trees.bin", huffman_trees)
+
         # Compress data into Huffman trees
         compressed_data = compress_data(varied_data, huffman_trees)
-        
+
         # Translate the compressed data back to the 0-255 range
         translated_data = translate_to_0_255(compressed_data)
-        
+
         # Save the result
         save_to_binary_file(output_file_name, translated_data)
-        
+
         print(f"Data successfully transformed and saved in the range 0-255 variations to '{output_file_name}'.")
 
 elif option == "2":
@@ -87,18 +96,24 @@ elif option == "2":
 
     varied_data = read_0_to_255_data(input_file_name)
     if varied_data:
-        # Generate random Huffman trees
-        huffman_trees = generate_random_huffman_trees(99, 8, 106)
-        
+        # Load Huffman trees from a file
+        huffman_trees = []
+        with open("huffman_trees.bin", 'rb') as file:
+            while True:
+                tree = file.read(1)
+                if not tree:
+                    break
+                huffman_trees.append(tree)
+
         # Extract data from Huffman trees
         extracted_data = extract_data(varied_data, huffman_trees)
-        
+
         # Translate the extracted data back to the 0-255 range
         translated_data = translate_to_0_255(extracted_data)
-        
+
         # Save the result
         save_to_binary_file(output_file_name, translated_data)
-        
+
         print(f"Data successfully extracted and saved in the range 0-255 to '{output_file_name}'.")
 
 print("Program terminated.")

@@ -29,6 +29,10 @@ def extract_data(compressed_data, bit_patterns):
                 break
     return bytes(extracted_data)
 
+# Function to translate binary data to 0-255 range
+def translate_to_0_255(data):
+    return bytes([int(byte) for byte in data])
+
 # Function to save data to a binary file
 def save_to_binary_file(file_name, data):
     with open(file_name, 'wb') as file:
@@ -59,8 +63,9 @@ if option == "1":
     original_data = read_from_binary_file(input_file_name)
     if original_data:
         compressed_data = compress_data(original_data, bit_patterns)
-        save_to_binary_file(output_file_name, compressed_data)
-        print(f"Data successfully compressed and saved to '{output_file_name}'.")
+        translated_data = translate_to_0_255(compressed_data)
+        save_to_binary_file(output_file_name, translated_data)
+        print(f"Data successfully compressed and saved as the range 0-255 to '{output_file_name}'.")
 
 elif option == "2":
     input_file_name = input("Enter the name of the input file: ")
@@ -69,7 +74,8 @@ elif option == "2":
     compressed_data = read_from_binary_file(input_file_name)
     if compressed_data:
         extracted_data = extract_data(compressed_data, bit_patterns)
-        save_to_binary_file(output_file_name, extracted_data)
-        print(f"Data successfully extracted and saved to '{output_file_name}'.")
+        translated_data = translate_to_0_255(extracted_data)
+        save_to_binary_file(output_file_name, translated_data)
+        print(f"Data successfully extracted and saved as the range 0-255 to '{output_file_name}'.")
 
 print("Program terminated.")

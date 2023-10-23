@@ -2,42 +2,34 @@
 Spring-187
 Random Compression Created by Jurijus Pacalovas
 
-1. **Author Information**: The code starts with an author comment, indicating the author as "Jurijus Pacalovas."
+1. **Importing Modules**: The code begins by importing the `random` module. This module is used for generating random values, which is crucial for creating Huffman trees.
 
-2. **Imports and Libraries**: The script imports the `random` module to generate random numbers.
+2. **Data Reading and Processing Functions**:
+   - `read_0_to_255_data(file_name)`: This function reads binary data from a file in the range 0-255.
+   - `apply_variations(data, variation_factor)`: This function applies variations to the input data, such as multiplying each byte by a specified factor.
+   - `translate_to_0_255(data)`: This function converts binary data to the 0-255 range by casting each byte to an integer.
+   - `save_to_binary_file(file_name, data)`: This function saves binary data to a file.
 
-3. **Function Definitions**:
+3. **Huffman Tree Generation Functions**:
+   - `generate_random_huffman_trees(num_trees, min_bits, max_bits)`: This function generates random Huffman trees (bit patterns) and returns them as a list of bytes.
 
-   - `read_0_to_255_data(file_name)`: This function reads binary data from a file, assumed to be in the 0-255 range, and returns it.
+4. **Data Compression and Extraction Functions**:
+   - `compress_data(data, huffman_trees)`: This function compresses data using a list of Huffman trees.
+   - `extract_data(compressed_data, huffman_trees)`: This function extracts data from compressed data using Huffman trees.
 
-   - `apply_variations(data, variation_factor)`: This function applies variations (in this code, multiplying by a factor) to the data and returns the modified data.
+5. **Main Program**:
+   - The program runs in a loop, allowing the user to select between three options: Compression (1), Extraction (2), or Exit (3). Invalid options trigger an error message.
+   - If the user selects "Compression" (option 1), they are prompted to input the names of the input and output files.
+     - The original data is read from the input file in the 0-255 range.
+     - Variations (e.g., multiplication by a factor) are applied to the data.
+     - Random Huffman trees are generated and saved to a binary file.
+     - The data is compressed using the generated Huffman trees and saved as a binary file in the 0-255 range variations.
+   - If the user selects "Extraction" (option 2), they are prompted to input the names of the input and output files.
+     - Varied data is read from the input file.
+     - Huffman trees are loaded from the binary file.
+     - Data is extracted from the varied data using the Huffman trees.
+     - The extracted data is saved to an output file in the 0-255 range.
+   - The program displays success messages after performing the selected operation.
 
-   - `generate_random_huffman_trees(num_trees, min_bits, max_bits)`: This function generates random Huffman trees (bit patterns) specified by the number of trees, minimum and maximum bit lengths, and returns them as a list of bytes.
-
-   - `compress_data(data, huffman_trees)`: Given data and a list of Huffman trees, this function compresses the data using Huffman coding and returns the compressed data.
-
-   - `extract_data(compressed_data, huffman_trees)`: This function extracts data from compressed data using the provided Huffman trees and returns the extracted data.
-
-   - `translate_to_0_255(data)`: This function translates binary data back to the 0-255 range.
-
-   - `save_to_binary_file(file_name, data)`: This function saves data to a binary file.
-
-4. **Main Program**:
-
-   - The main program is a loop where the user is prompted to select an option (1 for Compression, 2 for Extraction, or 3 to Exit).
-
-   - If the user selects "1" for Compression:
-     - They are asked to provide an input file with data in the 0-255 range.
-     - Variations (multiplying by a factor) are applied to the data.
-     - Random Huffman trees are generated.
-     - Data is compressed using Huffman coding with these trees.
-     - The compressed data is translated back to the 0-255 range.
-     - The result is saved to an output file.
-
-   - If the user selects "2" for Extraction:
-     - They are asked to provide an input file with data in the 0-255 range with variations.
-     - Random Huffman trees are generated.
-     - Data is extracted from the input file using Huffman trees.
-     - The extracted data is translated back to the 0-255 range.
-     - The result is saved to an output file.
-
+6. **Saving Huffman Trees**:
+   - To save the Huffman trees, a new function `save_huffman_trees_to_file` is introduced. It writes the Huffman trees to a binary file named "huffman_trees.bin" during the compression process and reads them during extraction.

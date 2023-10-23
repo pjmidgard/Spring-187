@@ -1,13 +1,13 @@
 import random
 
-# Function to generate random data of a specified length in bits
-def generate_random_data(num_bits):
-    return bytes([random.randint(0, 255) for _ in range(num_bits)])
+# Function to generate a random bit pattern of a specific length in bits
+def generate_random_bit_pattern(bit_length):
+    return bytes([random.randint(0, 255) for _ in range(bit_length)])
 
-# Define 99 sets of bit patterns (Huffman trees)
-bit_patterns = [generate_random_data(bits) for bits in range(8, 107)]
+# Create a list of 993 random bit patterns ranging from 8 to 1000 bits
+bit_patterns = [generate_random_bit_pattern(bit_length) for bit_length in range(8, 1001)]
 
-# Function to compress data using 99 trees
+# Function to compress data using 993 trees
 def compress_data(data, bit_patterns):
     compressed_data = bytearray()
     while data:
@@ -18,7 +18,7 @@ def compress_data(data, bit_patterns):
                 break
     return bytes(compressed_data)
 
-# Function to extract data using 99 trees
+# Function to extract data using 993 trees
 def extract_data(compressed_data, bit_patterns):
     extracted_data = bytearray()
     while compressed_data:
@@ -28,12 +28,6 @@ def extract_data(compressed_data, bit_patterns):
                 compressed_data = compressed_data[len(patterns):]
                 break
     return bytes(extracted_data)
-
-# Function to read a specified number of bits from data
-def read_bits(data, num_bits):
-    bits = data[:num_bits]
-    remaining_data = data[num_bits:]
-    return bits, remaining_data
 
 # Function to save data to a binary file
 def save_to_binary_file(file_name, data):
@@ -49,6 +43,12 @@ def read_from_binary_file(file_name):
     except FileNotFoundError:
         print(f"File '{file_name}' not found.")
         return None
+
+# Function to read a specified number of bits from data
+def read_bits(data, num_bits):
+    bits = data[:num_bits]
+    remaining_data = data[num_bits:]
+    return bits, remaining_data
 
 # Main program
 while True:

@@ -1,4 +1,4 @@
-#Author Jurijus Pacalovas
+# Author Jurijus Pacalovas
 import random
 
 # Function to read data from a binary file in the 0-255 range
@@ -71,7 +71,7 @@ if option == "1":
     original_data = read_0_to_255_data(input_file_name)
     if original_data:
         # Apply variations (e.g., multiply by a factor)
-        variation_factor = 2  # Adjust this factor as needed
+        variation_factor = 256  # Adjust this factor as needed
         varied_data = apply_variations(original_data, variation_factor)
 
         # Generate random Huffman trees

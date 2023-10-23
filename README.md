@@ -2,33 +2,38 @@
 Spring-187
 Random Compression Created by Jurijus Pacalovas
 
-1. **Random Data Generation**:
-   - The code begins by importing the `random` module and defines a function `generate_random_data(num_bits)` to generate random binary data of a specified length in bits.
+
+1. **Random Data Generation (generate_random_data)**:
+   - This function generates random binary data of a specified length in bits using the `random` module. It returns a `bytes` object.
 
 2. **Bit Patterns (Huffman Trees)**:
-   - It generates 99 sets of bit patterns, ranging from 8 to 106 bits in length, and stores them in the `bit_patterns` list.
+   - The code creates 99 sets of bit patterns, which are essentially arrays of random binary data with varying lengths, ranging from 8 to 106 bits. These bit patterns are stored in the `bit_patterns` list.
 
-3. **Compression and Extraction Functions**:
-   - Two primary functions, `compress_data` and `extract_data`, are defined to compress and extract data using the 99 Huffman trees. These functions identify and match the bit patterns to perform their respective operations.
+3. **Compression (compress_data) Function**:
+   - This function is designed to compress data using the 99 Huffman trees. It takes two arguments: the data to be compressed and the list of bit patterns.
+   - The function iterates through the input data and checks if any of the Huffman trees' patterns match at the beginning of the data.
+   - If a match is found, the matching pattern is appended to the `compressed_data` bytearray, and the data is shortened by the length of the pattern.
+   - This process continues until all data is compressed, and the result is returned as a `bytes` object.
 
-4. **Data Translation**:
-   - Another function, `translate_to_0_255(data)`, converts binary data to the 0-255 range, presumably for easier storage or transmission.
+4. **Extraction (extract_data) Function**:
+   - This function is intended for extracting data that was previously compressed. It takes two arguments: the compressed data and the list of bit patterns.
+   - Similar to the compression function, it iterates through the compressed data and looks for matching patterns from the Huffman trees.
+   - When a pattern is found, it is appended to the `extracted_data` bytearray, and the compressed data is reduced accordingly.
+   - The extracted data is returned as a `bytes` object.
 
-5. **File I/O Functions**:
-   - The code includes two functions, `save_to_binary_file` and `read_from_binary_file`, for saving data to binary files and reading data from binary files, respectively. It handles exceptions for file not found scenarios.
+5. **Data Translation (translate_to_0_255)**:
+   - This function converts binary data to the 0-255 range. It converts each byte in the input data to an integer value.
 
-6. **Main Program**:
-   - The main program runs in a loop, providing options to the user:
-     - Option 1: Compression
-     - Option 2: Extraction
-     - Option 3: Exit
+6. **File Input and Output Functions (save_to_binary_file and read_from_binary_file)**:
+   - These functions handle saving and reading binary data to and from files. They use the `'wb'` mode for writing and `'rb'` mode for reading in binary.
 
-7. **Option Processing**:
-   - Depending on the user's choice, the program proceeds as follows:
-     - **Compression (Option 1)**: It takes an input file, compresses the data using Huffman trees, translates the data, and saves it to an output file in the 0-255 range.
-     - **Extraction (Option 2)**: It reads compressed data from an input file, extracts it using Huffman trees, translates the data, and saves it to an output file in the 0-255 range.
+7. **Main Program Loop**:
+   - The program presents a menu to the user with three options: Compression, Extraction, or Exit.
+   - It ensures that the user selects a valid option (1, 2, or 3).
 
-8. **Exit**:
-   - The program terminates when the user selects Option 3.
+8. **Option Processing**:
+   - If the user chooses compression (Option 1), the program asks for input and output file names, compresses the data, translates it to the 0-255 range, and saves it to an output file.
+   - If the user chooses extraction (Option 2), it performs a similar process but for extracting data.
+   - The program terminates if the user selects Option 3 (Exit).
 
-This code seems to be a simplified example of data compression and extraction, but it has some limitations and potential improvements. For instance, the use of random Huffman trees may not be efficient or effective for real-world data compression.
+This code essentially demonstrates a basic data compression and extraction mechanism using a set of predefined Huffman trees. However, the use of random Huffman trees in practice is not recommended, as real-world data compression typically relies on more efficient and predictable algorithms. This code serves as a simplified educational example.

@@ -1,31 +1,42 @@
 import random
 
-# Function to generate random data of a specified length in bits
-def generate_random_data(num_bits):
-    return bytes([random.randint(0, 255) for _ in range(num_bits)])
+# Function to read data from a binary file in the 0-255 range
+def read_0_to_255_data(file_name):
+    try:
+        with open(file_name, 'rb') as file:
+            data = file.read()
+        return data
+    except FileNotFoundError:
+        print(f"File '{file_name}' not found.")
+        return None
 
-# Define 99 sets of bit patterns (Huffman trees)
-bit_patterns = [generate_random_data(bits) for bits in range(8, 107)]
+# Function to apply variations (e.g., multiply by a factor)
+def apply_variations(data, variation_factor):
+    return bytes([min(255, max(0, int(byte) * variation_factor)) for byte in data])
 
-# Function to compress data using 99 trees
-def compress_data(data, bit_patterns):
+# Function to generate random Huffman trees (bit patterns)
+def generate_random_huffman_trees(num_trees, min_bits, max_bits):
+    return [bytes([random.randint(0, 255) for _ in range(random.randint(min_bits, max_bits))]) for _ in range(num_trees)]
+
+# Function to compress data using Huffman trees
+def compress_data(data, huffman_trees):
     compressed_data = bytearray()
     while data:
-        for patterns in bit_patterns:
-            if data.startswith(patterns):
-                compressed_data += patterns
-                data = data[len(patterns):]
+        for tree in huffman_trees:
+            if data.startswith(tree):
+                compressed_data += tree
+                data = data[len(tree):]
                 break
     return bytes(compressed_data)
 
-# Function to extract data using 99 trees
-def extract_data(compressed_data, bit_patterns):
+# Function to extract data using Huffman trees
+def extract_data(compressed_data, huffman_trees):
     extracted_data = bytearray()
     while compressed_data:
-        for patterns in bit_patterns:
-            if compressed_data.startswith(patterns):
-                extracted_data += patterns
-                compressed_data = compressed_data[len(patterns):]
+        for tree in huffman_trees:
+            if compressed_data.startswith(tree):
+                extracted_data += tree
+                compressed_data = compressed_data[len(tree):]
                 break
     return bytes(extracted_data)
 
@@ -38,16 +49,6 @@ def save_to_binary_file(file_name, data):
     with open(file_name, 'wb') as file:
         file.write(data)
 
-# Function to read data from a binary file
-def read_from_binary_file(file_name):
-    try:
-        with open(file_name, 'rb') as file:
-            data = file.read()
-        return data
-    except FileNotFoundError:
-        print(f"File '{file_name}' not found.")
-        return None
-
 # Main program
 while True:
     option = input("Options:\n1. Compression\n2. Extraction\n3. Exit\nSelect an option (1, 2, or 3): ")
@@ -57,25 +58,47 @@ while True:
         print("Invalid option. Please select 1 for Compression, 2 for Extraction, or 3 to Exit.")
 
 if option == "1":
-    input_file_name = input("Enter the name of the input file: ")
-    output_file_name = input("Enter the name of the output file: ")
+    input_file_name = input("Enter the name of the input file (0-255 range): ")
+    output_file_name = input("Enter the name of the output file (0-255 range variations): ")
 
-    original_data = read_from_binary_file(input_file_name)
+    original_data = read_0_to_255_data(input_file_name)
     if original_data:
-        compressed_data = compress_data(original_data, bit_patterns)
+        # Apply variations (e.g., multiply by a factor)
+        variation_factor = 2  # Adjust this factor as needed
+        varied_data = apply_variations(original_data, variation_factor)
+        
+        # Generate random Huffman trees
+        huffman_trees = generate_random_huffman_trees(99, 8, 106)
+        
+        # Compress data into Huffman trees
+        compressed_data = compress_data(varied_data, huffman_trees)
+        
+        # Translate the compressed data back to the 0-255 range
         translated_data = translate_to_0_255(compressed_data)
+        
+        # Save the result
         save_to_binary_file(output_file_name, translated_data)
-        print(f"Data successfully compressed and saved as the range 0-255 to '{output_file_name}'.")
+        
+        print(f"Data successfully transformed and saved in the range 0-255 variations to '{output_file_name}'.")
 
 elif option == "2":
-    input_file_name = input("Enter the name of the input file: ")
-    output_file_name = input("Enter the name of the output file: ")
+    input_file_name = input("Enter the name of the input file (0-255 range variations): ")
+    output_file_name = input("Enter the name of the output file (0-255 range): ")
 
-    compressed_data = read_from_binary_file(input_file_name)
-    if compressed_data:
-        extracted_data = extract_data(compressed_data, bit_patterns)
+    varied_data = read_0_to_255_data(input_file_name)
+    if varied_data:
+        # Generate random Huffman trees
+        huffman_trees = generate_random_huffman_trees(99, 8, 106)
+        
+        # Extract data from Huffman trees
+        extracted_data = extract_data(varied_data, huffman_trees)
+        
+        # Translate the extracted data back to the 0-255 range
         translated_data = translate_to_0_255(extracted_data)
+        
+        # Save the result
         save_to_binary_file(output_file_name, translated_data)
-        print(f"Data successfully extracted and saved as the range 0-255 to '{output_file_name}'.")
+        
+        print(f"Data successfully extracted and saved in the range 0-255 to '{output_file_name}'.")
 
 print("Program terminated.")

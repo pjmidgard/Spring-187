@@ -1,3 +1,4 @@
+#Author Jurijus Pacalovas 
 import random
 
 # Function to read data from a binary file in the 0-255 range

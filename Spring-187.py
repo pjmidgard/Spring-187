@@ -41,7 +41,7 @@ def extract_data(compressed_data, huffman_trees):
                 break
     return bytes(extracted_data)
 
-# Function to translate binary data to 0-255 range
+# Function to translate binary data to the 0-255 range
 def translate_to_0_255(data):
     return bytes([int(byte) for byte in data])
 

@@ -77,7 +77,7 @@ while True:
             input_file_name = input("Enter the name of the input file (0-255 range): ")
             output_file_name = input("Enter the name of the output file (0-255 range variations): ")
             for _ in range(1):  # Repeat the compression 100 times
-                input_file_name=output_file_name
+                input_file_name=input_file_name
                 output_file_name=output_file_name
 
                 original_data = read_0_to_255_data(input_file_name)
@@ -109,7 +109,7 @@ while True:
             input_file_name = input("Enter the name of the input file (0-255 range variations): ")
             output_file_name = input("Enter the name of the output file (0-255 range): ")
             for _ in range(1):  # Repeat the extraction 100 times
-                input_file_name=output_file_name
+                input_file_name=input_file_name
                 output_file_name=output_file_name
                 varied_data = read_0_to_255_data(input_file_name)
                 if varied_data:

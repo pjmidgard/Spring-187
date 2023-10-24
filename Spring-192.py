@@ -1,3 +1,4 @@
+#Author Jurijus Pacalovas 
 import random
 import time
 import zlib

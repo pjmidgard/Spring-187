@@ -69,7 +69,7 @@ while True:
     option = input("Options:\n1. Compression\n2. Extraction\n3. Exit\nSelect an option (1, 2, or 3): ")
     if option in ("1", "2", "3"):
         if option == "1":
-            for _ in range(100):  # Repeat the compression 100 times
+            for _ in range(1):  # Repeat the compression 100 times
                 input_file_name = input("Enter the name of the input file (0-255 range): ")
                 output_file_name = input("Enter the name of the output file (0-255 range variations): ")
 
@@ -94,7 +94,7 @@ while True:
                     print(f"Data successfully transformed and saved in the range 0-255 variations to '{output_file_name}'.")
 
         elif option == "2":
-            for _ in range(100):  # Repeat the extraction 100 times
+            for _ in range(1):  # Repeat the extraction 100 times
                 input_file_name = input("Enter the name of the input file (0-255 range variations): ")
                 output_file_name = input("Enter the name of the output file (0-255 range): ")
 
